@@ -79,6 +79,17 @@ mysql_install_datadir:
       - file: mysql_config
     - require_in:
       - service: mysqld
+
+# set root password      
+mysql_install_rootpassword:
+  cmd.run:
+    - name: "'/usr/bin/mysqladmin' -u root password '{{ mysql_root_password }}'"
+    - user: root
+    - creates: {{ mysql_datadir }}/mysql/root.frm
+    - require:
+      - cmd: mysql_install_datadir
+    - require_in:
+      - service: mysqld
 {% endif %}
 
 mysqld-packages:
