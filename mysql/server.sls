@@ -87,8 +87,6 @@ mysql_install_rootpassword:
     - user: root
     - creates: {{ mysql_datadir }}/mysql/root.frm
     - require:
-      - cmd: mysql_install_datadir
-    - require_in:
       - service: mysqld
 {% endif %}
 
