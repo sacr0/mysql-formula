@@ -82,10 +82,11 @@ mysql_install_datadir:
 
 # set root password      
 mysql_install_rootpassword:
-  cmd.run:
+  cmd.wait:
     - name: "'/usr/bin/mysqladmin' -u root password '{{ mysql_root_password }}'"
     - user: root
-    - creates: {{ mysql_datadir }}/mysql/root.frm
+    - watch:
+      - cmd: mysql_install_datadir
     - require:
       - service: mysqld
 {% endif %}
